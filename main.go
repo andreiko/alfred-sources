@@ -5,22 +5,55 @@ import (
 	"github.com/andreiko/alfred-sources/sources/circle_ci"
 	"github.com/andreiko/alfred-sources/sources/github"
 	"github.com/andreiko/alfred-sources/updater"
+	"github.com/andreiko/alfred-sources/sources"
+	"flag"
+	"os"
+	"strings"
+	"github.com/erikdubbelboer/gspt"
 )
 
+func maskTokens() {
+	maskNext := false
+	maskedArgs := make([]string, 0)
+	masked := false
+	for _, arg := range os.Args {
+		if maskNext {
+			maskedArgs = append(maskedArgs, "***")
+			masked = true
+		} else {
+			maskedArgs = append(maskedArgs, arg)
+		}
+		maskNext = strings.HasSuffix(arg, "-token")
+	}
+
+	if masked {
+		gspt.SetProcTitle(strings.Join(maskedArgs, " "))
+	}
+}
 
 func main() {
-	// TODO: get tokens from command line
+	maskTokens()
 
-	src1 := circle_ci.NewCircleCiSource("x")
-	src2 := github.NewGithubSource("x")
+	circleToken := flag.String("circle-token", "", "CircleCI token")
+	githubToken := flag.String("github-token", "", "GitHub token")
+	flag.Parse()
 
-	upd := updater.NewUpdater()
 	srv := server.NewSourceServer()
+	upd := updater.NewUpdater()
 
-	upd.AddSource(src1)
-	srv.AddSource(src1)
-	upd.AddSource(src2)
-	srv.AddSource(src2)
+	var src sources.Source
+
+	if circleToken != nil && len(*circleToken) > 0 {
+		src = circle_ci.NewCircleCiSource(*circleToken)
+		upd.AddSource(src)
+		srv.AddSource(src)
+	}
+
+	if githubToken != nil && len(*githubToken) > 0 {
+		src = github.NewGithubSource(*githubToken)
+		upd.AddSource(src)
+		srv.AddSource(src)
+	}
 
 	upd.Run()
 	srv.Start()

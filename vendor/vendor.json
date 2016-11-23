@@ -15,6 +15,12 @@
 			"revision": ""
 		},
 		{
+			"checksumSHA1": "Ng7HFBilGDepjGtcPITCD1foce8=",
+			"path": "github.com/erikdubbelboer/gspt",
+			"revision": "6ce3e9d87b8c94ec4a633f85078de25981910124",
+			"revisionTime": "2016-10-02T06:35:31Z"
+		},
+		{
 			"checksumSHA1": "sZSeW3Dc6lUqm1CzMUdu3poimoA=",
 			"path": "github.com/golang/protobuf/proto",
 			"revision": "1f49d83d9aa00e6ce4fc8258c71cc7786aec968a",
