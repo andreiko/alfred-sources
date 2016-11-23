@@ -38,14 +38,14 @@ func (src *CircleCiSource) getDataFromApi() ([]byte, error) {
 
 	req, err := http.NewRequest("GET", circleProjectsUrl, nil)
 	if err != nil {
-		return make([]byte, 0), err
+		return []byte{}, err
 	}
 
 	req.Header["Accept"] = []string{"application/json"}
 	req.SetBasicAuth(src.token, "")
 	response, err := client.Do(req)
 	if err != nil {
-		return make([]byte, 0), err
+		return []byte{}, err
 	}
 
 	buffer := bytes.Buffer{}
@@ -61,12 +61,12 @@ func (src *CircleCiSource) Id() string {
 func (src *CircleCiSource) Update() error {
 	data, err := src.getDataFromApi()
 	if err != nil {
-		panic(err.Error())
+		return err
 	}
 
 	var projects []circleCiProject
 	if err := json.Unmarshal(data, &projects); err != nil {
-		panic(string(data))
+		return err
 	}
 
 	items := make([]sources.Item, 0)
