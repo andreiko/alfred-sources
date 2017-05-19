@@ -11,6 +11,12 @@
     <string>***</string>
     <string>-github-token</string>
     <string>***</string>
+    <string>-aws-access-key-id</string>
+    <string>***</string>
+    <string>-aws-secret-access-key</string>
+    <string>***</string>
+    <string>-aws-region</string>
+    <string>us-west-2</string>
   </array>
   <key>RunAtLoad</key>
   <true/>
