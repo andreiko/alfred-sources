@@ -1,19 +1,19 @@
 package circle_ci
 
 import (
-	"time"
-	"github.com/andreiko/alfred-sources/sources"
-	"encoding/json"
-	"net/http"
 	"bytes"
+	"encoding/json"
+	"github.com/andreiko/alfred-sources/sources"
 	"io/ioutil"
+	"net/http"
+	"time"
 )
 
 const circleProjectsUrl = "https://circleci.com/api/v1.1/projects"
 const filename = "/Users/andreybulgakov/dev/src/github.com/andreiko/alfred-sources/sources/circle_ci/projects.json"
 
 type circleCiProject struct {
-	VcsType string `json:"vcs_type"`
+	VcsType  string `json:"vcs_type"`
 	RepoName string `json:"reponame"`
 	Username string `json:"username"`
 }

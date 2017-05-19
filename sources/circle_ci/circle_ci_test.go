@@ -1,9 +1,9 @@
 package circle_ci
 
 import (
-	"testing"
-	"github.com/stretchr/testify/assert"
 	"github.com/andreiko/alfred-sources/sources"
+	"github.com/stretchr/testify/assert"
+	"testing"
 )
 
 func TestNewItem(t *testing.T) {
@@ -13,7 +13,7 @@ func TestNewItem(t *testing.T) {
 
 func TestAttributes(t *testing.T) {
 	expected := map[string]interface{}{
-		"vs_type": "github",
+		"vs_type":  "github",
 		"reponame": "dotfiles",
 		"username": "andreiko",
 		"fullname": "andreiko/dotfiles",

@@ -1,15 +1,15 @@
 package github
 
 import (
+	"fmt"
 	"github.com/andreiko/alfred-sources/sources"
 	"strings"
-	"fmt"
 )
 
 type GithubItem struct {
-	pushedAt  string
-	name string
-	owner string
+	pushedAt string
+	name     string
+	owner    string
 	fullName string
 }
 
@@ -34,7 +34,7 @@ func (item *GithubItem) GetRank(query string) int {
 		return 5
 	} else if len(item.fullName) >= len(query) && item.fullName[:len(query)] == query {
 		return 4
-	} else if len(item.name) >= len(query) &&item.name[:len(query)] == query {
+	} else if len(item.name) >= len(query) && item.name[:len(query)] == query {
 		return 3
 	} else if strings.Contains(item.name, query) {
 		return 2
@@ -47,8 +47,8 @@ func (item *GithubItem) GetRank(query string) int {
 
 func (item *GithubItem) Attributes() map[string]interface{} {
 	return map[string]interface{}{
-		"name": item.name,
-		"owner": item.owner,
+		"name":     item.name,
+		"owner":    item.owner,
 		"fullname": item.fullName,
 	}
 }
@@ -56,8 +56,8 @@ func (item *GithubItem) Attributes() map[string]interface{} {
 func NewGithubItem(pushed_at, name, owner string) *GithubItem {
 	return &GithubItem{
 		pushedAt: pushed_at,
-		name: strings.ToLower(name),
-		owner: strings.ToLower(owner),
+		name:     strings.ToLower(name),
+		owner:    strings.ToLower(owner),
 		fullName: strings.ToLower(fmt.Sprintf("%s/%s", owner, name)),
 	}
 }

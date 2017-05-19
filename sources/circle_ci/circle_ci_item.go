@@ -1,9 +1,9 @@
 package circle_ci
 
 import (
+	"fmt"
 	"github.com/andreiko/alfred-sources/sources"
 	"strings"
-	"fmt"
 )
 
 type CircleCiItem struct {
@@ -35,7 +35,7 @@ func (item *CircleCiItem) GetRank(query string) int {
 		return 5
 	} else if len(item.fullName) >= len(query) && item.fullName[:len(query)] == query {
 		return 4
-	} else if len(item.repoName) >= len(query) &&item.repoName[:len(query)] == query {
+	} else if len(item.repoName) >= len(query) && item.repoName[:len(query)] == query {
 		return 3
 	} else if strings.Contains(item.repoName, query) {
 		return 2
@@ -48,7 +48,7 @@ func (item *CircleCiItem) GetRank(query string) int {
 
 func (item *CircleCiItem) Attributes() map[string]interface{} {
 	return map[string]interface{}{
-		"vs_type": item.vcsType,
+		"vs_type":  item.vcsType,
 		"reponame": item.repoName,
 		"username": item.username,
 		"fullname": item.fullName,
@@ -57,7 +57,7 @@ func (item *CircleCiItem) Attributes() map[string]interface{} {
 
 func NewCircleCiItem(vcsType, repoName, username string) *CircleCiItem {
 	return &CircleCiItem{
-		vcsType: strings.ToLower(vcsType),
+		vcsType:  strings.ToLower(vcsType),
 		repoName: strings.ToLower(repoName),
 		username: strings.ToLower(username),
 		fullName: strings.ToLower(fmt.Sprintf("%s/%s", username, repoName)),

@@ -1,6 +1,6 @@
 package sources
 
-type Item interface  {
+type Item interface {
 	Attributes() map[string]interface{}
 	GetRank(string) int
 	Autocomplete() string
