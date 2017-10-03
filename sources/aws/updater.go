@@ -2,28 +2,19 @@ package aws
 
 import (
 	"github.com/andreiko/alfred-sources/sources"
-	"github.com/aws/aws-sdk-go/aws"
-	"github.com/aws/aws-sdk-go/aws/credentials"
 	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/aws/aws-sdk-go/service/ecs"
 	"strings"
 )
 
 type Updater struct {
-	AccessKeyId     string
-	SecretAccessKey string
-	Region          string
-
 	ClusterSource  *AwsClustersSource
 	TaskdefsSource *AwsTaskdefSource
 	ServiceSource  *AwsServiceSource
 }
 
 func (u *Updater) Update() error {
-	ses, err := session.NewSession(&aws.Config{
-		Credentials: credentials.NewStaticCredentials(u.AccessKeyId, u.SecretAccessKey, ""),
-		Region:      &u.Region,
-	})
+	ses, err := session.NewSession()
 	if err != nil {
 		return err
 	}
@@ -36,7 +27,7 @@ func (u *Updater) Update() error {
 	for _, clusterName := range clusterNames {
 		clusterItems = append(clusterItems, &AwsClusterItem{
 			Name:   clusterName,
-			Region: u.Region,
+			Region: *ses.Config.Region,
 		})
 	}
 	u.ClusterSource.ClusterItems = clusterItems
@@ -50,12 +41,12 @@ func (u *Updater) Update() error {
 	for _, taskdefName := range taskdefNames {
 		taskdefItems = append(taskdefItems, &AwsTaskdefItem{
 			Name:   taskdefName,
-			Region: u.Region,
+			Region: *ses.Config.Region,
 		})
 	}
 	u.TaskdefsSource.TaskdefItems = taskdefItems
 
-	services, err := u.fetchServices(ses, clusterNames)
+	services, err := u.fetchServices(ses, clusterNames, *ses.Config.Region)
 	if err != nil {
 		return err
 	}
@@ -101,7 +92,7 @@ func (u *Updater) fetchTaskdefs(ses *session.Session) ([]string, error) {
 	return items, nil
 }
 
-func (u *Updater) fetchServices(ses *session.Session, clusterNames []string) ([]*AwsServiceItem, error) {
+func (u *Updater) fetchServices(ses *session.Session, clusterNames []string, region string) ([]*AwsServiceItem, error) {
 	ecsClient := ecs.New(ses)
 	items := []*AwsServiceItem{}
 
@@ -109,7 +100,7 @@ func (u *Updater) fetchServices(ses *session.Session, clusterNames []string) ([]
 		err := ecsClient.ListServicesPages(&ecs.ListServicesInput{Cluster: &clusterName}, func(output *ecs.ListServicesOutput, last bool) bool {
 			for _, arn := range output.ServiceArns {
 				arnParts := strings.Split(*arn, "/")
-				items = append(items, NewAwsServiceItem(arnParts[len(arnParts)-1], clusterName, u.Region))
+				items = append(items, NewAwsServiceItem(arnParts[len(arnParts)-1], clusterName, region))
 			}
 			return !last
 		})

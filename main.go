@@ -38,9 +38,6 @@ func main() {
 
 	circleToken := flag.String("circle-token", "", "CircleCI token")
 	githubToken := flag.String("github-token", "", "GitHub token")
-	awsAccessKeyId := flag.String("aws-access-key-id", "", "AWS Access Key Id")
-	awsSecretAccessKey := flag.String("aws-secret-access-key", "", "AWS Secret Access Key")
-	awsRegion := flag.String("aws-region", "", "AWS Region")
 	flag.Parse()
 
 	srv := server.NewSourceServer()
@@ -64,12 +61,8 @@ func main() {
 		fmt.Println("added github")
 	}
 
-	if awsAccessKeyId != nil && awsSecretAccessKey != nil && awsRegion != nil && len(*awsAccessKeyId) > 0 && len(*awsSecretAccessKey) > 0 && len(*awsRegion) > 0 {
-		awsUpdater := &aws.Updater{
-			AccessKeyId:     *awsAccessKeyId,
-			SecretAccessKey: *awsSecretAccessKey,
-			Region:          *awsRegion,
-		}
+	if os.Getenv("AWS_REGION") != "" && os.Getenv("AWS_ACCESS_KEY_ID") != "" && os.Getenv("AWS_SECRET_ACCESS_KEY") != "" {
+		awsUpdater := &aws.Updater{}
 
 		clusterSrc := aws.NewAwsClustersSource(awsUpdater)
 		upd.AddSource(clusterSrc)
