@@ -1,6 +1,7 @@
 package github
 
 import (
+	"context"
 	"github.com/andreiko/alfred-sources/sources"
 	"github.com/google/go-github/github"
 	"golang.org/x/oauth2"
@@ -24,7 +25,7 @@ func (src *GithubSource) Update() error {
 	items := make([]sources.Item, 0)
 	for next_page > 0 {
 		list_opts := &github.RepositoryListOptions{ListOptions: github.ListOptions{Page: next_page}}
-		repos, resp, err := src.client.Repositories.List("", list_opts)
+		repos, resp, err := src.client.Repositories.List(context.Background(), "", list_opts)
 		if err != nil {
 			return err
 		}
