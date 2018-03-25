@@ -1,2 +1,4 @@
 /.idea
 /alfred-sources
+/workflows/*.alfredworkflow
+.DS_Store
