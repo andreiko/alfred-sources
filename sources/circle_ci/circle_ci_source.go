@@ -36,7 +36,6 @@ func (src *CircleCiSource) getDataFromApi(account Account) ([]byte, error) {
 		Timeout: time.Second * 10,
 	}
 
-	fmt.Println(account.BaseURL + circleProjectsUrl + " / " + account.Token)
 	req, err := http.NewRequest("GET", account.BaseURL+circleProjectsUrl, nil)
 	if err != nil {
 		return nil, err
@@ -82,7 +81,6 @@ func (src *CircleCiSource) Update() error {
 		for _, p := range projects {
 			item := NewCircleCiItem(p.VcsType, p.RepoName, p.Username, account.BaseURL)
 			if set[item.fullName] {
-				fmt.Printf("duplicate %s\n", item.fullName)
 				continue
 			}
 
