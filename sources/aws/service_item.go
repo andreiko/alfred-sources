@@ -2,8 +2,9 @@ package aws
 
 import (
 	"fmt"
-	"github.com/andreiko/alfred-sources/sources"
 	"strings"
+
+	"github.com/andreiko/alfred-sources/sources"
 )
 
 type AwsServiceItem struct {

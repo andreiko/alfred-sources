@@ -3,6 +3,9 @@ package main
 import (
 	"flag"
 	"fmt"
+	"os"
+	"strings"
+
 	"github.com/andreiko/alfred-sources/server"
 	"github.com/andreiko/alfred-sources/sources"
 	"github.com/andreiko/alfred-sources/sources/aws"
@@ -10,8 +13,6 @@ import (
 	"github.com/andreiko/alfred-sources/sources/github"
 	"github.com/andreiko/alfred-sources/updater"
 	"github.com/erikdubbelboer/gspt"
-	"os"
-	"strings"
 )
 
 func maskTokens() {
@@ -36,8 +37,9 @@ func maskTokens() {
 func main() {
 	maskTokens()
 
-	circleToken := flag.String("circle-token", "", "CircleCI token")
+	circleConfig := flag.String("circle-token", "", "CircleCI token")
 	githubToken := flag.String("github-token", "", "GitHub token")
+	awsOnce := flag.Bool("aws-once", false, "Don't update AWS resources periodically")
 	flag.Parse()
 
 	srv := server.NewSourceServer()
@@ -45,8 +47,8 @@ func main() {
 
 	var src sources.Source
 
-	if circleToken != nil && len(*circleToken) > 0 {
-		src = circle_ci.NewCircleCiSource(*circleToken)
+	if circleConfig != nil && len(*circleConfig) > 0 {
+		src = circle_ci.NewCircleCiSource(circle_ci.ParseAccounts(*circleConfig))
 		upd.AddSource(src)
 		srv.AddSource(src)
 
@@ -65,17 +67,24 @@ func main() {
 		awsUpdater := &aws.Updater{}
 
 		clusterSrc := aws.NewAwsClustersSource(awsUpdater)
-		upd.AddSource(clusterSrc)
 		srv.AddSource(clusterSrc)
 
 		taskdefsSrc := aws.NewAwsTaskdefsSource(awsUpdater)
-		upd.AddSource(taskdefsSrc)
 		srv.AddSource(taskdefsSrc)
 
 		servicesSrc := aws.NewAwsServiceSource(awsUpdater)
-		upd.AddSource(servicesSrc)
 		srv.AddSource(servicesSrc)
 
+		if awsOnce != nil && *awsOnce {
+			if err := src.Update(); err == nil {
+				fmt.Printf("Updated aws successfully\n")
+
+			} else {
+				fmt.Printf("Error updating aws: %s\n", err.Error())
+			}
+		} else {
+			upd.AddSource(clusterSrc)
+		}
 		fmt.Println("added aws")
 	}
 

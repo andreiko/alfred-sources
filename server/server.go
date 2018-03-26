@@ -3,9 +3,10 @@ package server
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/andreiko/alfred-sources/sources"
 	"net/http"
 	"regexp"
+
+	"github.com/andreiko/alfred-sources/sources"
 )
 
 type responseItemType struct {

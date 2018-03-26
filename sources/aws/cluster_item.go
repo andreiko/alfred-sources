@@ -1,8 +1,9 @@
 package aws
 
 import (
-	"github.com/andreiko/alfred-sources/sources"
 	"strings"
+
+	"github.com/andreiko/alfred-sources/sources"
 )
 
 type AwsClusterItem struct {

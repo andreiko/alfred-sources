@@ -1,10 +1,11 @@
 package aws
 
 import (
+	"strings"
+
 	"github.com/andreiko/alfred-sources/sources"
 	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/aws/aws-sdk-go/service/ecs"
-	"strings"
 )
 
 type Updater struct {

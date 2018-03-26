@@ -2,8 +2,9 @@ package circle_ci
 
 import (
 	"fmt"
-	"github.com/andreiko/alfred-sources/sources"
 	"strings"
+
+	"github.com/andreiko/alfred-sources/sources"
 )
 
 type CircleCiItem struct {
@@ -11,6 +12,7 @@ type CircleCiItem struct {
 	repoName string
 	username string
 	fullName string
+	baseURL  string
 }
 
 func (item *CircleCiItem) Autocomplete() string {
@@ -52,14 +54,16 @@ func (item *CircleCiItem) Attributes() map[string]interface{} {
 		"reponame": item.repoName,
 		"username": item.username,
 		"fullname": item.fullName,
+		"base_url": item.baseURL,
 	}
 }
 
-func NewCircleCiItem(vcsType, repoName, username string) *CircleCiItem {
+func NewCircleCiItem(vcsType, repoName, username, baseURL string) *CircleCiItem {
 	return &CircleCiItem{
 		vcsType:  strings.ToLower(vcsType),
 		repoName: strings.ToLower(repoName),
 		username: strings.ToLower(username),
 		fullName: strings.ToLower(fmt.Sprintf("%s/%s", username, repoName)),
+		baseURL:  baseURL,
 	}
 }

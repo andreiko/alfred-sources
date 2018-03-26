@@ -2,8 +2,9 @@ package updater
 
 import (
 	"fmt"
-	"github.com/andreiko/alfred-sources/sources"
 	"time"
+
+	"github.com/andreiko/alfred-sources/sources"
 )
 
 type Updater struct {

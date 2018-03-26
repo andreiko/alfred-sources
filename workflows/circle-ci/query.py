@@ -13,7 +13,7 @@ for r in data['items']:
     attrs = r['attributes']
     items.append({
         "title": attrs['fullname'],
-        "arg": "https://circleci.com/gh/%s" % attrs['fullname'],
+        "arg": "%s/gh/%s" % (attrs['base_url'], attrs['fullname']),
         "autocomplete": r['autocomplete'],
         "subtitle": "Open CircleCI Project %s" % attrs['fullname'],
         "icon": {

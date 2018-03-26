@@ -1,13 +1,14 @@
 package circle_ci
 
 import (
+	"testing"
+
 	"github.com/andreiko/alfred-sources/sources"
 	"github.com/stretchr/testify/assert"
-	"testing"
 )
 
 func TestNewItem(t *testing.T) {
-	item := NewCircleCiItem("github", "dotfiles", "andreiko")
+	item := NewCircleCiItem("github", "dotfiles", "andreiko", "https://circleci.com")
 	assert.Equal(t, "andreiko/dotfiles", item.Autocomplete())
 }
 
@@ -19,12 +20,12 @@ func TestAttributes(t *testing.T) {
 		"fullname": "andreiko/dotfiles",
 	}
 
-	item := NewCircleCiItem("github", "dotfiles", "andreiko")
+	item := NewCircleCiItem("github", "dotfiles", "andreiko", "https://circleci.com")
 	assert.Equal(t, expected, item.Attributes())
 }
 
 func TestRanks(t *testing.T) {
-	item := NewCircleCiItem("github", "dotfiles", "andreiko")
+	item := NewCircleCiItem("github", "dotfiles", "andreiko", "https://circleci.com")
 
 	fullname_match := item.GetRank("andreiko/dotfiles")
 	reponame_match := item.GetRank("dotfiles")
@@ -44,9 +45,9 @@ func TestRanks(t *testing.T) {
 }
 
 func TestLessThan(t *testing.T) {
-	i1 := NewCircleCiItem("github", "abc1", "andreiko")
-	i2 := NewCircleCiItem("github", "abc2", "andreiko")
-	i3 := NewCircleCiItem("github", "abc3", "andreiko")
+	i1 := NewCircleCiItem("github", "abc1", "andreiko", "https://circleci.com")
+	i2 := NewCircleCiItem("github", "abc2", "andreiko", "https://circleci.com")
+	i3 := NewCircleCiItem("github", "abc3", "andreiko", "https://circleci.com")
 
 	assert.True(t, i1.LessThan(i2))
 	assert.True(t, i2.LessThan(i3))
@@ -54,10 +55,10 @@ func TestLessThan(t *testing.T) {
 
 func testItems() []sources.Item {
 	return []sources.Item{
-		NewCircleCiItem("github", "abc3", "andreiko"),
-		NewCircleCiItem("github", "abc2", "andreiko"),
-		NewCircleCiItem("github", "bc", "andreiko"),
-		NewCircleCiItem("github", "xbnc", "andreiko"),
+		NewCircleCiItem("github", "abc3", "andreiko", "https://circleci.com"),
+		NewCircleCiItem("github", "abc2", "andreiko", "https://circleci.com"),
+		NewCircleCiItem("github", "bc", "andreiko", "https://circleci.com"),
+		NewCircleCiItem("github", "xbnc", "andreiko", "https://circleci.com"),
 	}
 }
 

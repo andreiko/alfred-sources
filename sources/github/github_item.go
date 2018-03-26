@@ -2,8 +2,9 @@ package github
 
 import (
 	"fmt"
-	"github.com/andreiko/alfred-sources/sources"
 	"strings"
+
+	"github.com/andreiko/alfred-sources/sources"
 )
 
 type GithubItem struct {

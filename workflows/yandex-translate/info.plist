@@ -6,24 +6,11 @@
 	<string></string>
 	<key>connections</key>
 	<dict>
-		<key>350DF544-FADE-49CD-A941-188983E89D27</key>
+		<key>914213E1-CBC5-49E6-BCAE-9EF8BE839905</key>
 		<array>
 			<dict>
 				<key>destinationuid</key>
-				<string>13EE24F8-455E-4884-8260-2740C0821C19</string>
-				<key>modifiers</key>
-				<integer>0</integer>
-				<key>modifiersubtext</key>
-				<string></string>
-				<key>vitoclose</key>
-				<false/>
-			</dict>
-		</array>
-		<key>36C98BB8-764F-4918-B4EA-64AB0A08189E</key>
-		<array>
-			<dict>
-				<key>destinationuid</key>
-				<string>13EE24F8-455E-4884-8260-2740C0821C19</string>
+				<string>3D33C9B8-BA66-44AB-8796-503A8961DDAE</string>
 				<key>modifiers</key>
 				<integer>0</integer>
 				<key>modifiersubtext</key>
@@ -40,124 +27,25 @@
 	<key>disabled</key>
 	<false/>
 	<key>name</key>
-	<string>Yandex Dictionary</string>
+	<string>Yandex Translate</string>
 	<key>objects</key>
 	<array>
 		<dict>
 			<key>config</key>
 			<dict>
-				<key>alfredfiltersresults</key>
-				<false/>
-				<key>alfredfiltersresultsmatchmode</key>
-				<integer>0</integer>
-				<key>argumenttrimmode</key>
-				<integer>0</integer>
-				<key>argumenttype</key>
-				<integer>0</integer>
-				<key>escaping</key>
-				<integer>68</integer>
-				<key>keyword</key>
-				<string>t</string>
-				<key>queuedelaycustom</key>
-				<integer>6</integer>
-				<key>queuedelayimmediatelyinitially</key>
-				<false/>
-				<key>queuedelaymode</key>
-				<integer>2</integer>
-				<key>queuemode</key>
-				<integer>2</integer>
-				<key>runningsubtext</key>
-				<string>Loading...</string>
-				<key>script</key>
-				<string># coding: utf-8
-import json
-import sys
-import re
-import urllib.parse
-import urllib.request
-
-query = sys.argv[1]
-
-if re.match('^[\sa-zA-Z]+$', query):
-	lang = 'en-ru'
-else:
-	lang = 'ru-en'
-
-API_KEY = open('./api.key').read()
-
-f = urllib.request.urlopen('https://dictionary.yandex.net/api/v1/dicservice.json/lookup?%s' % urllib.parse.urlencode({
-	'key': API_KEY,
-	'lang': lang,
-	'text': query,
-}))
-
-items = []
-
-data = json.loads(f.read().decode('utf-8'))
-
-for d in data['defs']:
-	for t in d['tr']:
-		syns = []
-		means = []
-
-		syns.append(t['text'])
-
-		for syn in t.get('syn', []):
-			syns.append(syn['text'])
-
-		for mean in t.get('mean', []):
-			means.append(mean['text'])
-
-		items.append({
-	        "title": ", ".join(syns),
-	        "subtitle": "(%s) %s" % (t['pos'], ", ".join(means)),
-	        "arg": "lang=%s&amp;text=%s" % (lang, text),
-		})
-
-if not items:
-	items.append({
-		"title": "no translations found",
-		"valid": false
-	})
-
-print(json.dumps({'items': items}))
-</string>
-				<key>scriptargtype</key>
-				<integer>1</integer>
-				<key>scriptfile</key>
-				<string>./run.py</string>
-				<key>subtext</key>
-				<string></string>
-				<key>title</key>
-				<string>...</string>
-				<key>type</key>
-				<integer>8</integer>
-				<key>withspace</key>
-				<true/>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.input.scriptfilter</string>
-			<key>uid</key>
-			<string>36C98BB8-764F-4918-B4EA-64AB0A08189E</string>
-			<key>version</key>
-			<integer>2</integer>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
 				<key>browser</key>
-				<string>com.apple.Safari</string>
+				<string></string>
 				<key>spaces</key>
 				<string></string>
 				<key>url</key>
-				<string>https://translate.yandex.ru/?text={query}</string>
+				<string>{query}</string>
 				<key>utf8</key>
 				<true/>
 			</dict>
 			<key>type</key>
 			<string>alfred.workflow.action.openurl</string>
 			<key>uid</key>
-			<string>13EE24F8-455E-4884-8260-2740C0821C19</string>
+			<string>3D33C9B8-BA66-44AB-8796-503A8961DDAE</string>
 			<key>version</key>
 			<integer>1</integer>
 		</dict>
@@ -173,77 +61,25 @@ print(json.dumps({'items': items}))
 				<key>argumenttype</key>
 				<integer>0</integer>
 				<key>escaping</key>
-				<integer>68</integer>
+				<integer>0</integer>
 				<key>keyword</key>
-				<string>т</string>
+				<string>t</string>
 				<key>queuedelaycustom</key>
-				<integer>6</integer>
+				<integer>3</integer>
 				<key>queuedelayimmediatelyinitially</key>
 				<false/>
 				<key>queuedelaymode</key>
-				<integer>2</integer>
+				<integer>1</integer>
 				<key>queuemode</key>
-				<integer>2</integer>
+				<integer>1</integer>
 				<key>runningsubtext</key>
 				<string>Loading...</string>
 				<key>script</key>
-				<string># coding: utf-8
-import json
-import sys
-import re
-import urllib.parse
-import urllib.request
-
-query = sys.argv[1]
-
-if re.match('^[\sa-zA-Z]+$', query):
-	lang = 'en-ru'
-else:
-	lang = 'ru-en'
-
-API_KEY = open('./api.key').read()
-
-f = urllib.request.urlopen('https://dictionary.yandex.net/api/v1/dicservice.json/lookup?%s' % urllib.parse.urlencode({
-	'key': API_KEY,
-	'lang': lang,
-	'text': query,
-}))
-
-items = []
-
-data = json.loads(f.read().decode('utf-8'))
-
-for d in data['defs']:
-	for t in d['tr']:
-		syns = []
-		means = []
-
-		syns.append(t['text'])
-
-		for syn in t.get('syn', []):
-			syns.append(syn['text'])
-
-		for mean in t.get('mean', []):
-			means.append(mean['text'])
-
-		items.append({
-	        "title": ", ".join(syns),
-	        "subtitle": "(%s) %s" % (t['pos'], ", ".join(means)),
-	        "arg": "lang=%s&amp;text=%s" % (lang, text),
-		})
-
-if not items:
-	items.append({
-		"title": "no translations found",
-		"valid": false
-	})
-
-print(json.dumps({'items': items}))
-</string>
+				<string></string>
 				<key>scriptargtype</key>
 				<integer>1</integer>
 				<key>scriptfile</key>
-				<string>./run.py</string>
+				<string>run.py</string>
 				<key>subtext</key>
 				<string></string>
 				<key>title</key>
@@ -256,7 +92,7 @@ print(json.dumps({'items': items}))
 			<key>type</key>
 			<string>alfred.workflow.input.scriptfilter</string>
 			<key>uid</key>
-			<string>350DF544-FADE-49CD-A941-188983E89D27</string>
+			<string>914213E1-CBC5-49E6-BCAE-9EF8BE839905</string>
 			<key>version</key>
 			<integer>2</integer>
 		</dict>
@@ -265,26 +101,19 @@ print(json.dumps({'items': items}))
 	<string></string>
 	<key>uidata</key>
 	<dict>
-		<key>13EE24F8-455E-4884-8260-2740C0821C19</key>
+		<key>3D33C9B8-BA66-44AB-8796-503A8961DDAE</key>
 		<dict>
 			<key>xpos</key>
-			<integer>500</integer>
+			<integer>300</integer>
 			<key>ypos</key>
-			<integer>180</integer>
+			<integer>130</integer>
 		</dict>
-		<key>350DF544-FADE-49CD-A941-188983E89D27</key>
+		<key>914213E1-CBC5-49E6-BCAE-9EF8BE839905</key>
 		<dict>
 			<key>xpos</key>
-			<integer>210</integer>
+			<integer>80</integer>
 			<key>ypos</key>
-			<integer>290</integer>
-		</dict>
-		<key>36C98BB8-764F-4918-B4EA-64AB0A08189E</key>
-		<dict>
-			<key>xpos</key>
-			<integer>210</integer>
-			<key>ypos</key>
-			<integer>120</integer>
+			<integer>130</integer>
 		</dict>
 	</dict>
 	<key>webaddress</key>
