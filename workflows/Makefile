@@ -4,6 +4,7 @@ all: \
 	aws-taskdefs.alfredworkflow \
 	circle-ci.alfredworkflow \
 	github.alfredworkflow \
+	datadog.alfredworkflow \
 	yandex-translate.alfredworkflow
 
 aws-clusters.alfredworkflow: aws-clusters/*
@@ -20,6 +21,9 @@ circle-ci.alfredworkflow: circle-ci/*
 
 github.alfredworkflow: github/*
 	cd github; zip ../$@ *
+
+datadog.alfredworkflow: datadog/*
+	cd datadog; zip ../$@ *
 
 yandex-translate.alfredworkflow: yandex-translate/*
 	cd yandex-translate; zip ../$@ *

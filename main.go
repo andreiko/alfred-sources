@@ -10,6 +10,7 @@ import (
 	"github.com/andreiko/alfred-sources/sources"
 	"github.com/andreiko/alfred-sources/sources/aws"
 	"github.com/andreiko/alfred-sources/sources/circle_ci"
+	"github.com/andreiko/alfred-sources/sources/datadog"
 	"github.com/andreiko/alfred-sources/sources/github"
 	"github.com/andreiko/alfred-sources/updater"
 	"github.com/erikdubbelboer/gspt"
@@ -39,7 +40,9 @@ func main() {
 
 	circleConfig := flag.String("circle-token", "", "CircleCI token")
 	githubToken := flag.String("github-token", "", "GitHub token")
-	awsOnce := flag.Bool("aws-once", false, "Don't update AWS resources periodically")
+	datadogAPIKey := flag.String("datadog-api-key", "", "Datadog API key")
+	datadogAppKey := flag.String("datadog-app-key", "", "Datadog app key")
+	datadogBaseURL := flag.String("datadog-base-url", "", "Datadog base url")
 	flag.Parse()
 
 	srv := server.NewSourceServer()
@@ -63,6 +66,14 @@ func main() {
 		fmt.Println("added github")
 	}
 
+	if datadogAPIKey != nil && len(*datadogAPIKey) > 0 && datadogAppKey != nil && len(*datadogAppKey) > 0 && datadogBaseURL != nil && len(*datadogBaseURL) > 0 {
+		src = datadog.NewDatadogSource(*datadogAPIKey, *datadogAppKey, *datadogBaseURL)
+		upd.AddSource(src)
+		srv.AddSource(src)
+
+		fmt.Println("added datadog")
+	}
+
 	if os.Getenv("AWS_REGION") != "" && os.Getenv("AWS_ACCESS_KEY_ID") != "" && os.Getenv("AWS_SECRET_ACCESS_KEY") != "" {
 		awsUpdater := &aws.Updater{}
 
@@ -75,16 +86,7 @@ func main() {
 		servicesSrc := aws.NewAwsServiceSource(awsUpdater)
 		srv.AddSource(servicesSrc)
 
-		if awsOnce != nil && *awsOnce {
-			if err := src.Update(); err == nil {
-				fmt.Printf("Updated aws successfully\n")
-
-			} else {
-				fmt.Printf("Error updating aws: %s\n", err.Error())
-			}
-		} else {
-			upd.AddSource(clusterSrc)
-		}
+		upd.AddSource(clusterSrc)
 		fmt.Println("added aws")
 	}
 

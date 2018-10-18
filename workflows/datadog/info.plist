@@ -6,11 +6,11 @@
 	<string></string>
 	<key>connections</key>
 	<dict>
-		<key>77504354-8241-49E2-AFAD-42B5E909941D</key>
+		<key>FCE47065-23D1-46E5-B846-593A0300CC12</key>
 		<array>
 			<dict>
 				<key>destinationuid</key>
-				<string>D3311E3C-FF3B-4B8C-AF84-A8EE299094EE</string>
+				<string>BAA19B9B-A90E-4CBE-845E-DBFCB823AF2A</string>
 				<key>modifiers</key>
 				<integer>0</integer>
 				<key>modifiersubtext</key>
@@ -27,7 +27,7 @@
 	<key>disabled</key>
 	<false/>
 	<key>name</key>
-	<string>AWS Services</string>
+	<string>Datadog</string>
 	<key>objects</key>
 	<array>
 		<dict>
@@ -44,7 +44,7 @@
 				<key>escaping</key>
 				<integer>0</integer>
 				<key>keyword</key>
-				<string>s</string>
+				<string>dd</string>
 				<key>queuedelaycustom</key>
 				<integer>3</integer>
 				<key>queuedelayimmediatelyinitially</key>
@@ -54,7 +54,7 @@
 				<key>queuemode</key>
 				<integer>1</integer>
 				<key>runningsubtext</key>
-				<string>Please wait</string>
+				<string>Please wait subtext</string>
 				<key>script</key>
 				<string></string>
 				<key>scriptargtype</key>
@@ -62,9 +62,9 @@
 				<key>scriptfile</key>
 				<string>query.py</string>
 				<key>subtext</key>
-				<string>ECS Service</string>
+				<string>Placeholder subtext</string>
 				<key>title</key>
-				<string>ECS Services</string>
+				<string>Placeholder title</string>
 				<key>type</key>
 				<integer>8</integer>
 				<key>withspace</key>
@@ -73,7 +73,7 @@
 			<key>type</key>
 			<string>alfred.workflow.input.scriptfilter</string>
 			<key>uid</key>
-			<string>77504354-8241-49E2-AFAD-42B5E909941D</string>
+			<string>FCE47065-23D1-46E5-B846-593A0300CC12</string>
 			<key>version</key>
 			<integer>2</integer>
 		</dict>
@@ -92,7 +92,7 @@
 			<key>type</key>
 			<string>alfred.workflow.action.openurl</string>
 			<key>uid</key>
-			<string>D3311E3C-FF3B-4B8C-AF84-A8EE299094EE</string>
+			<string>BAA19B9B-A90E-4CBE-845E-DBFCB823AF2A</string>
 			<key>version</key>
 			<integer>1</integer>
 		</dict>
@@ -101,19 +101,19 @@
 	<string></string>
 	<key>uidata</key>
 	<dict>
-		<key>77504354-8241-49E2-AFAD-42B5E909941D</key>
+		<key>BAA19B9B-A90E-4CBE-845E-DBFCB823AF2A</key>
+		<dict>
+			<key>xpos</key>
+			<integer>230</integer>
+			<key>ypos</key>
+			<integer>110</integer>
+		</dict>
+		<key>FCE47065-23D1-46E5-B846-593A0300CC12</key>
 		<dict>
 			<key>xpos</key>
 			<integer>50</integer>
 			<key>ypos</key>
-			<integer>100</integer>
-		</dict>
-		<key>D3311E3C-FF3B-4B8C-AF84-A8EE299094EE</key>
-		<dict>
-			<key>xpos</key>
-			<integer>260</integer>
-			<key>ypos</key>
-			<integer>100</integer>
+			<integer>110</integer>
 		</dict>
 	</dict>
 	<key>webaddress</key>
