@@ -56,9 +56,9 @@ func (i *AwsServiceItem) LessThan(another sources.Item) bool {
 
 func NewAwsServiceItem(name, clusterName, region string) *AwsServiceItem {
 	return &AwsServiceItem{
-		Name:        strings.ToLower(name),
+		Name:        name,
 		Region:      region,
-		ClusterName: strings.ToLower(clusterName),
-		fullName:    strings.ToLower(fmt.Sprintf("%s/%s", clusterName, name)),
+		ClusterName: clusterName,
+		fullName:    fmt.Sprintf("%s/%s", clusterName, name),
 	}
 }
